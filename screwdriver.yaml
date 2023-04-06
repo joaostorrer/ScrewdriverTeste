@@ -1,0 +1,27 @@
+---
+shared:
+  image: buildpack-deps
+
+
+jobs:
+  main:
+    requires: [~pr, ~commit]
+    steps:
+      - sqitch: echo "deploy homologação"
+
+  testes_unitarios:
+    requires: main
+    steps:
+      - utplsql: echo "testes unitarios"
+
+  publica_resultados_testes:
+    requires: testes_unitarios
+    steps:
+      - publica_resultados: echo "publica resultados"
+      - set-metadata: meta set example.coverage 99.95
+  
+  verifica_se_cobertura_ok:
+    requires: publica_resultados_testes
+    steps:
+      - verifica_porcentagem_cobertura_codigo: echo "verifica porcentagem cobertura codigo"
+  
