@@ -21,8 +21,8 @@ jobs:
       - set-resultado-testes-e-cobertura: |
         meta set tests.coverage 100
         meta set tests.results 10/10
-        meta set tests.coverageUrl /test/coverageReport.html
-        meta set tests.resultsUrl /test/testReport.html
+        #meta set tests.coverageUrl /test/coverageReport.html
+        #meta set tests.resultsUrl /test/testReport.html
   
   verifica_se_cobertura_ok:
     requires: publica_resultados_testes
