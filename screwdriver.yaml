@@ -8,11 +8,14 @@ jobs:
     requires: [~pr, ~commit]
     # image: sqitch-oracle:latest
     environment:
-      ORDEM_DEPLOY: ("TESTE" "BLA")
+      ORDEM_DEPLOY: "TESTE BLA"
       USER_SHELL_BIN: bash
     steps:
       - sqitch: echo "deploy homologação"
-      - teste: echo ${ORDEM_DEPLOY[@]}
+      - teste: |
+          bla=($ORDEM_DEPLOY)
+          echo ${bla[0]}
+          echo ${bla[1]}
 
   testes_unitarios:
     requires: deploy_homologacao
