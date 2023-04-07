@@ -7,11 +7,12 @@ jobs:
   deploy_homologacao:
     requires: [~pr, ~commit]
     # image: sqitch-oracle:latest
-    environment:
-      ORDEM_DEPLOY: ("TESTE" "BLA")
+    #environment:
+    #  ORDEM_DEPLOY: ("TESTE" "BLA")
     steps:
       - sqitch: echo "deploy homologação"
       - teste: |
+          ORDEM_DEPLOY=("TESTE" "BLA")
           echo ${ORDEM_DEPLOY[0]}
           echo ${ORDEM_DEPLOY[1]}
 
