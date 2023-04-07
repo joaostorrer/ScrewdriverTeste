@@ -12,8 +12,8 @@ jobs:
     steps:
       - sqitch: echo "deploy homologação"
       - teste: |
-        echo ${ORDEM_DEPLOY[0]}
-        echo ${ORDEM_DEPLOY[1]}
+          echo ${ORDEM_DEPLOY[0]}
+          echo ${ORDEM_DEPLOY[1]}
 
   testes_unitarios:
     requires: deploy_homologacao
