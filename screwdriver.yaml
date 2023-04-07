@@ -6,24 +6,27 @@ shared:
 jobs:
   deploy_homologacao:
     requires: [~pr, ~commit]
+    # image: sqitch-oracle:latest
+    environment:
+      ORDEM_DEPLOY: "TESTE"
     steps:
-      - sqitch: echo "deploy homologação"
+      - sqitch: echo "deploy homologação $ORDEM_DEPLOY"
 
   testes_unitarios:
     requires: deploy_homologacao
     steps:
       - utplsql: echo "testes unitarios"
 
-  publica_resultados_testes:
+  publica_testes_e_coverage:
     requires: testes_unitarios
     steps:
       - publica_resultados: echo "publica resultados"
-      - set-resultado-testes-e-cobertura: |
+      - set_resultado_testes_e_coverage: |
           meta set tests.coverage 100
           meta set tests.results 10/10
   
   verifica_se_cobertura_ok:
-    requires: publica_resultados_testes
+    requires: publica_testes_e_coverage
     steps:
       - verifica_porcentagem_cobertura_codigo: echo "verifica porcentagem cobertura codigo"
   
