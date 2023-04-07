@@ -9,6 +9,8 @@ jobs:
     # image: sqitch-oracle:latest
     #environment:
     #  ORDEM_DEPLOY: ("TESTE" "BLA")
+    environment:
+      USER_SHELL_BIN: bash
     steps:
       - sqitch: echo "deploy homologação"
       - teste: |
