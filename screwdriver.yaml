@@ -1,6 +1,11 @@
 ---
 shared:
   image: buildpack-deps
+  
+parameters:
+  test_coverage:
+    description: "Porcentagem de cobertura de código que será aceito para o build passar"
+    value: "70"
 
 
 jobs:
@@ -11,10 +16,9 @@ jobs:
       ORDEM_DEPLOY: "Age/Parametros, Age/Clientes/CMHS/Parametros, Age/Objetos/Geral"
       USER_SHELL_BIN: bash
     steps:
-      - sqitch: echo "deploy homologação"
-      - teste: |
-          IFS="," read -a ORDEM_DEPLOY_PROJETOS_SQITCH <<< $(echo "$ORDEM_DEPLOY" | tr -d " ")
-          for projeto_sqitch in ${ORDEM_DEPLOY_PROJETOS_SQITCH[@]}; do
+      - sqitch: |
+          IFS="," read -a ordem_deploy_array <<< $(echo "$ORDEM_DEPLOY" | tr -d " ")
+          for projeto_sqitch in ${ordem_deploy_array[@]}; do
             echo $projeto_sqitch
           done
 
@@ -26,13 +30,17 @@ jobs:
   publica_testes_e_coverage:
     requires: testes_unitarios
     steps:
-      - publica_resultados: echo "publica resultados"
+      - publica_resultados: echo "publica resultados" > ${SD_ARTIFACTS_DIR}/sample1.txt
       - set_resultado_testes_e_coverage: |
           meta set tests.coverage 100
           meta set tests.results 10/10
+          meta set tests.coverageUrl sample1.txt
+          meta set tests.resultsUrl sample1.txt
   
   verifica_se_cobertura_ok:
     requires: publica_testes_e_coverage
     steps:
-      - verifica_porcentagem_cobertura_codigo: echo "verifica porcentagem cobertura codigo"
+      - verifica_porcentagem_cobertura_codigo: |
+          porcentagem_atual=60
+          if (($porcentagem_atual < $(meta get parameters.test_coverage))); then exit 1; fi
   
