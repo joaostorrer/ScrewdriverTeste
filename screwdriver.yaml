@@ -13,9 +13,7 @@ jobs:
     steps:
       - sqitch: echo "deploy homologação"
       - teste: |
-          ORDEM_DEPLOY_SEM_ESPACO=$(echo "$ORDEM_DEPLOY" | tr -d " ")
-          IFS="," read -a ORDEM_DEPLOY_PROJETOS_SQITCH <<< "$ORDEM_DEPLOY_SEM_ESPACO"
-          echo "${ORDEM_DEPLOY_PROJETOS_SQITCH[0]}"
+          IFS="," read -a ORDEM_DEPLOY_PROJETOS_SQITCH <<< $(echo "$ORDEM_DEPLOY" | tr -d " ")
           for projeto_sqitch in ${ORDEM_DEPLOY_PROJETOS_SQITCH[@]}; do
             echo $projeto_sqitch
           done
