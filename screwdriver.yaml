@@ -42,5 +42,6 @@ jobs:
     steps:
       - verifica_porcentagem_cobertura_codigo: |
           porcentagem_atual=60
-          if (($porcentagem_atual < $(meta get parameters.test_coverage.value))); then exit 1; fi
+          porcentagem_aceitavel=$(meta get parameters.test_coverage.value)
+          if (($porcentagem_atual < porcentagem_aceitavel)); then exit 1; fi
   
