@@ -5,7 +5,7 @@ shared:
 parameters:
   test_coverage:
     description: "Porcentagem de cobertura de código que será aceito para o build passar"
-    value: "70"
+    value: 70
 
 
 jobs:
@@ -42,5 +42,5 @@ jobs:
     steps:
       - verifica_porcentagem_cobertura_codigo: |
           porcentagem_atual=60
-          if (($porcentagem_atual < $(meta get parameters.test_coverage))); then exit 1; fi
+          if (($porcentagem_atual < $(meta get parameters.test_coverage.value))); then exit 1; fi
   
