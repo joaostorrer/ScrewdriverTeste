@@ -10,7 +10,10 @@ jobs:
     environment:
       ORDEM_DEPLOY: ("TESTE" "BLA")
     steps:
-      - sqitch: echo "deploy homologação $ORDEM_DEPLOY"
+      - sqitch: echo "deploy homologação"
+      - teste: |
+        echo ${ORDEM_DEPLOY[0]}
+        echo ${ORDEM_DEPLOY[1]}
 
   testes_unitarios:
     requires: deploy_homologacao
