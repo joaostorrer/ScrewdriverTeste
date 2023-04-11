@@ -11,7 +11,7 @@ parameters:
 jobs:
   deploy_homologacao:
     requires: [~pr, ~commit]
-    # image: sqitch-oracle:latest
+    image: sqitch-oracle:latest
     environment:
       ORDEM_DEPLOY: "Age/Parametros, Age/Clientes/CMHS/Parametros, Age/Objetos/Geral"
       USER_SHELL_BIN: bash
