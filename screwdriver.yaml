@@ -24,6 +24,7 @@ jobs:
 
   testes_unitarios:
     requires: deploy_homologacao
+    image: joaostorrer/utplsql-cli:3.1.9
     steps:
       - utplsql: echo "testes unitarios"
 
